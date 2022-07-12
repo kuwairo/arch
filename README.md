@@ -68,6 +68,7 @@ echo "Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch" > /etc/pa
     linux-firmware \
     btrfs-progs \
     intel-ucode \
+    bash-completion \
     man-db \
     man-pages \
     vim
