@@ -51,6 +51,12 @@ UEFI with GPT
 # mount -o noatime,compress=zstd,subvol=@home /dev/<root> /mnt/home
 ```
 
+#### Mirrors
+
+```
+echo "Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch" > /etc/pacman.d/mirrorlist
+```
+
 #### Essential packages
 
 ```
@@ -82,9 +88,9 @@ UEFI with GPT
 #### Basic setup
 
 ```
-# passwd
 # ln -sf /usr/share/zoneinfo/<Region>/<City> /etc/localtime
 # hwclock --systohc
+# # uncomment 'en_US.UTF-8 UTF-8' in /etc/locale.gen
 # locale-gen
 # echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 ```
@@ -103,10 +109,9 @@ UEFI with GPT
 # echo "::1        localhost" >> /etc/hosts
 # echo "127.0.1.1  <hostname>.localdomain <hostname>" >> /etc/hosts
 #
-# pacman -S networkmanager firewalld reflector openssh rsync
+# pacman -S networkmanager firewalld openssh rsync
 # systemctl enable NetworkManager.service
 # systemctl enable firewalld.service
-# systemctl enable reflector.timer
 ```
 
 #### Bluetooth
@@ -150,14 +155,9 @@ UEFI with GPT
 #### GNOME
 
 ```
-# pacman -S gnome gnome-tweaks papirus-icon-theme xdg-utils xdg-user-dirs
+# pacman -S gnome gnome-tweaks gnome-themes-extra \
+            firefox papirus-icon-theme xdg-user-dirs
 # systemctl enable gdm.service
-```
-
-#### Flatpak
-
-```
-# pacman -S flatpak xdg-desktop-portal-gnome xdg-desktop-portal-gtk
 ```
 
 #### Printer
