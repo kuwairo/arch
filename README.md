@@ -23,10 +23,10 @@ Passphrase: <...>
 
 UEFI with GPT
 
-| Mount point    | Partition   | Type                 | Size    |
-|----------------|-------------|----------------------|---------|
-| /mnt/boot      | /dev/<efi>  | EFI system partition | 512 MiB |
-| /mnt (for now) | /dev/<root> | Linux filesystem     | <...>   |
+| Mount point      | Partition     | Type                 | Size    |
+|------------------|---------------|----------------------|---------|
+| `/mnt/boot`      | `/dev/<efi>`  | EFI system partition | 512 MiB |
+| `/mnt` (for now) | `/dev/<root>` | Linux filesystem     | <...>   |
 
 ```
 # lsblk
