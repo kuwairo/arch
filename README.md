@@ -1,4 +1,4 @@
-### Arch Linux (EFI, Btrfs, zram, GNOME, Wayland)
+### Arch Linux (EFISTUB, Btrfs, zram, GNOME, Wayland)
 
 #### WiFi
 
@@ -132,11 +132,11 @@ echo "Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch" > /etc/pa
 # systemctl mask systemd-rfkill.socket
 ```
 
-#### zram
+#### zram (8 GiB)
 
 ```
 # pacman -S zram-generator
-# echo -e "[zram0]\nzram-size = 8192" > /etc/systemd/zram-generator.conf
+# echo -e "[zram0]\nzram-size = 8192" >> /etc/systemd/zram-generator.conf
 ```
 
 #### Audio
@@ -177,18 +177,18 @@ echo "Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch" > /etc/pa
 # visudo # uncomment '%wheel ALL=(ALL:ALL) ALL'
 ```
 
-#### GRUB
+#### EFISTUB
 
 ```
-# pacman -S grub efibootmgr os-prober mtools dosfstools ntfs-3g
-# grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-# grub-mkconfig -o /boot/grub/grub.cfg
+# pacman -S efibootmgr
+# efibootmgr -d /dev/<boot-device> -p <boot-part-no> -c -L "Arch Linux" -l /vmlinuz-linux \
+-u 'root=PARTUUID=<root-PARTUUID> rootflags=noatime,compress=zstd,subvol=@ rw initrd=\intel-ucode.img initrd=\initramfs-linux.img'
 ```
 
 #### Initramfs
 
 ```
-# mkinitcpio -P
+# mkinitcpio -p linux
 ```
 
 #### Reboot
