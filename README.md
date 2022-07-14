@@ -174,8 +174,8 @@ UEFI with GPT
 
 ```
 # pacman -S mesa intel-media-driver libva-utils mpv
-# # Set LIBVA_DRIVER_NAME=iHD
-# # Firefox (about:config): media.ffmpeg.vaapi.enabled = true
+# # If vainfo fails (after reboot), set LIBVA_DRIVER_NAME=iHD (e.g. in /etc/environment)
+# # In Firefox (about:config), set media.ffmpeg.vaapi.enabled = true
 ```
 
 #### GNOME
