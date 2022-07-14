@@ -36,7 +36,9 @@ UEFI with GPT
 ```
 # mkfs.fat -F 32 /dev/<efi>
 # mkfs.btrfs /dev/<root>
-#
+```
+
+```
 # mount /dev/<root> /mnt
 # btrfs subvolume create /mnt/@
 # btrfs subvolume create /mnt/@home
@@ -45,16 +47,12 @@ UEFI with GPT
 ```
 # umount /mnt
 # mount -o noatime,compress=zstd,subvol=@ /dev/<root> /mnt
-#
+```
+
+```
 # mkdir /mnt/{boot,home}
 # mount /dev/<efi> /mnt/boot
 # mount -o noatime,compress=zstd,subvol=@home /dev/<root> /mnt/home
-```
-
-#### Mirrors
-
-```
-echo "Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch" > /etc/pacman.d/mirrorlist
 ```
 
 #### Essential packages
@@ -106,13 +104,38 @@ echo "Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch" > /etc/pa
 
 ```
 # echo "<hostname>" >> /etc/hostname
-# echo "127.0.0.1  localhost" >> /etc/hosts
-# echo "::1        localhost" >> /etc/hosts
-# echo "127.0.1.1  <hostname>.localdomain <hostname>" >> /etc/hosts
-#
+# echo "\
+> 127.0.0.1  localhost
+> ::1        localhost
+> 127.0.1.1  <hostname>.localdomain <hostname>" >> /etc/hosts
+```
+
+```
 # pacman -S networkmanager firewalld openssh rsync
 # systemctl enable NetworkManager.service
 # systemctl enable firewalld.service
+```
+
+#### Reflector
+
+```
+# pacman -S reflector
+# mv /etc/pacman.d/mirrorlist \
+     /etc/pacman.d/mirrorlist.bkp
+```
+
+```
+# echo "\
+> --country <C1,C2,...,Cn>
+> --latest 10
+> --sort rate
+> --protocol https
+> --save /etc/pacman.d/mirrorlist" >> /etc/xdg/reflector/reflector.conf
+```
+
+```
+# systemctl enable reflector.timer
+# systemctl start reflector.service
 ```
 
 #### Bluetooth
@@ -132,11 +155,13 @@ echo "Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch" > /etc/pa
 # systemctl mask systemd-rfkill.socket
 ```
 
-#### zram (8 GiB)
+#### zram
 
 ```
 # pacman -S zram-generator
-# echo -e "[zram0]\nzram-size = 8192" >> /etc/systemd/zram-generator.conf
+# echo "\
+> [zram0]
+> zram-size = min(ram / 2, 8192)" >> /etc/systemd/zram-generator.conf
 ```
 
 #### Audio
@@ -149,7 +174,7 @@ echo "Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch" > /etc/pa
 
 ```
 # pacman -S mesa intel-media-driver libva-utils mpv
-# # Please, set LIBVA_DRIVER_NAME=iHD
+# # Set LIBVA_DRIVER_NAME=iHD
 # # Firefox (about:config): media.ffmpeg.vaapi.enabled = true
 ```
 
@@ -181,6 +206,7 @@ echo "Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch" > /etc/pa
 
 ```
 # pacman -S efibootmgr
+# blkid # to find PARTUUID
 # efibootmgr -d /dev/<boot-device> -p <boot-part-no> -c -L "Arch Linux" -l /vmlinuz-linux \
 -u 'root=PARTUUID=<root-PARTUUID> rootflags=noatime,compress=zstd,subvol=@ rw initrd=\intel-ucode.img initrd=\initramfs-linux.img'
 ```
