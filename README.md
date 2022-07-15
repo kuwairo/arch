@@ -120,7 +120,7 @@ UEFI with GPT
 
 ```
 # pacman -S reflector
-# mv /etc/pacman.d/mirrorlist \
+# cp /etc/pacman.d/mirrorlist \
      /etc/pacman.d/mirrorlist.bkp
 ```
 
@@ -130,12 +130,11 @@ UEFI with GPT
 > --latest 10
 > --sort rate
 > --protocol https
-> --save /etc/pacman.d/mirrorlist" >> /etc/xdg/reflector/reflector.conf
+> --save /etc/pacman.d/mirrorlist" > /etc/xdg/reflector/reflector.conf
 ```
 
 ```
 # systemctl enable reflector.timer
-# systemctl start reflector.service
 ```
 
 #### Bluetooth
@@ -170,20 +169,20 @@ UEFI with GPT
 # pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack
 ```
 
-#### Video
-
-```
-# pacman -S mesa intel-media-driver libva-utils mpv
-# # If vainfo fails (after reboot), set LIBVA_DRIVER_NAME=iHD (e.g. in /etc/environment)
-# # In Firefox (about:config), set media.ffmpeg.vaapi.enabled = true
-```
-
 #### GNOME
 
 ```
 # pacman -S gnome gnome-tweaks gnome-themes-extra \
             firefox papirus-icon-theme xdg-user-dirs
 # systemctl enable gdm.service
+```
+
+#### Video
+
+```
+# pacman -S mesa intel-media-driver libva-utils mpv
+# # If vainfo fails (after reboot), set LIBVA_DRIVER_NAME=iHD (e.g. in /etc/environment)
+# # In Firefox (about:config), set media.ffmpeg.vaapi.enabled = true
 ```
 
 #### Printer
