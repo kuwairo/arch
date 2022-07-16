@@ -142,6 +142,7 @@ UEFI with GPT
 ```
 # pacman -S bluez bluez-utils
 # systemctl enable bluetooth.service
+# # check AutoEnable option in /etc/bluetooth/main.conf
 ```
 
 #### Power management
@@ -222,5 +223,11 @@ UEFI with GPT
 # exit
 # umount -R /mnt
 # reboot
+```
+
+#### PC speaker
+
+```
+# echo "blacklist pcspkr" >> /etc/modprobe.d/nobeep.conf
 ```
 
