@@ -111,7 +111,8 @@ UEFI with GPT
 ```
 
 ```
-# pacman -S networkmanager firewalld openssh rsync
+# pacman -S networkmanager firewalld openssh rsync \
+            wireguard-tools openresolv
 # systemctl enable NetworkManager.service
 # systemctl enable firewalld.service
 ```
